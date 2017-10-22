@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WikiSum</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+    <section id="particles-js2">
+        <div id="particles-js"></div>
+        <div class="container disappearing">
+
+            <div class="center-block"><h1 id="top-badge" class="page-title">WikiSum</h1></div>
+        </div>
+        <div class="container main">
+            <div class="col-xs-8 col-xs-offset-2 col-md-6 col-md-offset-3">
+                <div class="form-group">
+                    <input class="form-control" id="search" name="search" required placeholder="Albert Einstein" maxlength="50">
+                </div>
+            </div>
+            <div class="col-xs-12 col-md-6 col-md-offset-3 disappearing">
+                <a onclick="getSearchContent()">
+                    <div id="genome-button">
+                        <h3 class="unselectable"> SEARCH</h3>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="container disappearing">
+            <div class="col-xs-12 col-md-8 col-md-offset-2">
+                <p class="white" style="text-align: center">A Wikipedia Knowledge Representation Utility</p>
+            </div>
+        </div>
+        <div class="container appearing scrollable" style="display: none">
+            <div style="overflow: auto">
+                <div id="main-summary" style="overflow: auto" class="white col-xs-12">
+                    <h2>Main Summary</h2>
+                    <p id="main-summary-text"></p>
+                </div>
+                <div id = "0" class="white additive col-md-6">
+                </div>
+                <div id = "1" class="white additive col-md-6">
+                </div>
+                <div id = "2" class="white additive col-md-6">
+                </div>
+                <div id = "3" class="white additive col-md-6">
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="js/particles.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

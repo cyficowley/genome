@@ -1,0 +1,127 @@
+:root{
+    --header : #fff;
+    --header-hover : #ccc;
+    --header-text : #111;
+    --home-background : #619dc2;
+    --photo-border : #FF5629;
+    --portfolio-background : #1ed9c3;
+    --portfolio-fixed-background: #ffffff;
+    --experience-fixed-background: #f3f3f3;
+    --im-bored : #0F5959;
+    --about-background: #17A697;
+    --contact-background: #373F51;
+}
+
+.disappearing{
+    -webkit-transition: height 2s;
+    -moz-transition: height 2s;
+    -ms-transition: height 2s;
+    -o-transition: height 2s;
+    transition: height 2s;
+}
+
+.disappearing.active-progress{
+    overflow: hidden;
+    height: 0 !important;
+}
+
+.jumbotron{
+    background-color: var(--portfolio-background);
+    color: #fff;
+    text-align: center;
+}
+#particles-js2{
+    background:linear-gradient(to right, #2980b9, #2c3e50);
+    height: 100vh;
+    font-size: 20px;
+    overflow: hidden;
+}
+
+a{
+    color: white;
+    text-decoration: none;
+}
+a:hover{
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#genome-button h3{
+    line-height: 40px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+#genome-button h3 img{
+    height: 40px;
+    width: 40px;
+}
+
+
+.unselectable{
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: pointer; cursor: hand;
+}
+
+#genome-button{
+    margin-top: 25px;
+    margin-bottom: 25px;
+    border-radius: 5px;
+    background-color: var( --about-background );
+    -webkit-transition: background-color .3s ease-out;
+    -moz-transition: background-color .3s ease-out;
+    -o-transition: background-color .3s ease-out;
+    transition: background-color .3s ease-out;
+    overflow: auto;
+    text-align: center;
+}
+#genome-button:hover{
+    background-color: var(--im-bored) !important;
+}
+
+#search{
+    text-align: center;
+    font-size: 36px;
+    height: auto;
+}
+
+h1, h2, h3, h4, h5, h6{
+    text-align: center;
+}
+
+.main{
+    padding-top: 25px;
+}
+
+.page-title{
+    z-index: -1;
+    background: linear-gradient(to bottom, white, var(--portfolio-background), var(--about-background));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    user-select: none;
+    font-size: 56px;
+}
+#top-badge{
+    padding-top: 75px;
+}
+
+.white{
+    color: white;
+}
+.scrollable{
+    overflow-y: scroll;
+    display: block;
+    height: calc(100vh - 105px);
+}
+canvas{
+    position: fixed;
+    top:0;
+    z-index: 0;
+}
+.container{
+    z-index: 1;
+}
