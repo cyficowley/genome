@@ -9,7 +9,7 @@ function getData(input){
     }
     else{
         $.ajax({
-            url: "http://localhost:5000/wiki/" + input + "/summaries",
+            url: "https://localhost:5000/wiki/" + input + "/summaries",
             dataType: "json"
         }).done(function(data) {
             $("#main-summary-text").text(data["summaries"]);
@@ -33,13 +33,16 @@ function getData(input){
 }
 
 function getSummaries(input){
+    localStorage.clear();
     $.ajax({
         url: "http://localhost:5000/wiki/" + input.join("+") + "/summaries",
         dataType: "json"
     }).done(function(data) {
         var array = $(".additive");
         for(var i = 0; i < array.length; i ++) {
-            $(array[i]).append("<p class=\""+input[i]+"\">" + data["summaries"][i] + "</p>");
+            localStorage.setItem(input[i], data['summaries'][i]);
+            var output = data['summaries'][i].substring(0,string.indexOf(' ', 200));
+            $(array[i]).append("<p class=\""+input[i]+"\">" + output + "</p>");
         }
     });
 }
