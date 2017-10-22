@@ -9,7 +9,7 @@ function getData(input){
     }
     else{
         $.ajax({
-            url: "http://localhost:5000/wiki/" + input + "/summaries",
+            url: "https://wikisumapi.herokuapp.com/wiki/" + input + "/summaries",
             dataType: "json"
         }).done(function(data) {
             $("#main-summary-text").text(data["summaries"]);
@@ -17,7 +17,7 @@ function getData(input){
     }
     input = input.replace(" ", "_");
     $.ajax({
-        url: "http://localhost:5000/wiki/" + input + "/titles",
+        url: "https://wikisumapi.herokuapp.com/wiki/" + input + "/titles",
         dataType: "json"
     }).done(function(data) {
         var array = $(".additive");
@@ -34,7 +34,7 @@ function getData(input){
 
 function getSummaries(input){
     $.ajax({
-        url: "http://localhost:5000/wiki/" + input.join("+") + "/summaries",
+        url: "https://wikisumapi.herokuapp.com/wiki/" + input.join("+") + "/summaries",
         dataType: "json"
     }).done(function(data) {
         var array = $(".additive");
