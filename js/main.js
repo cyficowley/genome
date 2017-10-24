@@ -10,7 +10,7 @@ function getData(input){
         search.val(input.replace(/_/g, ' '));
 
         newSearch = true;
-        var pastSummary = $("#" + input.toLowerCase().replace(/_/g, ' '));
+        var pastSummary = $("#" + input.toLowerCase().replace(/ /g, '_'));
         if(pastSummary.length > 0){
             $("#main-summary-text").text(localStorage.getItem(input.replace(/ /g, '_').toLowerCase()));
         }
@@ -51,7 +51,7 @@ function getSummaries(input){
             for (var i = 0; i < array.length; i++) {
                 localStorage.setItem(input[i], data['summaries'][i]);
                 var output = data['summaries'][i].substring(0, data['summaries'][i].indexOf(' ', 275)) + "...";
-                $(array[i]).append("<p class=\"" + input[i] + "\">" + output + "</p>");
+                $(array[i]).append("<p id=\"" + input[i].replace(/ /g, '_').toLowerCase() + "\">" + output + "</p>");
             }
         });
     }
