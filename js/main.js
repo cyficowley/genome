@@ -1,50 +1,63 @@
 var done_once = false;
+var host = "https://wikisumapi.herokuapp.com/wiki/";
+var search = $("#search");
+var latestInput = "";
 
 function getData(input){
-    $("#search").val(input);
+    if(latestInput !== input){
+        latestInput = input;
 
-    var pastSummary = $("#" + input);
-    if(pastSummary.length > 0){
-        $("#main-summary-text").text(pastSummary.text);
-    }
-    else{
+        search.val(input.replace(/_/g, ' '));
+
+        newSearch = true;
+        var pastSummary = $("#" + input.toLowerCase().replace(/ /g, '_'));
+        if(pastSummary.length > 0){
+            $("#main-summary-text").text(localStorage.getItem(input.replace(/ /g, '_').toLowerCase()));
+        }
+        else{
+            $.ajax({
+                url: host+ input + "/summaries",
+                dataType: "json"
+            }).done(function(data) {
+                $("#main-summary-text").text(data["summaries"]);
+            });
+        }
+        input = input.replace(/ /g, '_');
         $.ajax({
-            url: "https://wikisumapi.herokuapp.com/wiki/" + input + "/summaries",
+            url: host+ input + "/titles",
             dataType: "json"
         }).done(function(data) {
-            $("#main-summary-text").text(data["summaries"]);
+            var array = $(".additive");
+            for(var i = 0; i < array.length; i ++) {
+                array[i].innerHTML = ("<a onclick='getData(\""+data["titles"][i].replace(/ /g, '_').toLowerCase()+"\")' class='noColor'><h3>" + capitalize(data["titles"][i].replace(/_/g, ' '))+"</h3></a>")
+            }
+            getSummaries(data["titles"])
         });
-    }
-    input = input.replace(" ", "_");
-    $.ajax({
-        url: "https://wikisumapi.herokuapp.com/wiki/" + input + "/titles",
-        dataType: "json"
-    }).done(function(data) {
-        var array = $(".additive");
-        for(var i = 0; i < array.length; i ++) {
-            array[i].innerHTML = ("<a onclick='getData(\""+data["titles"][i].replace(" ", "_")+"\")' class='noColor'><h3>" + data["titles"][i].replace("_", " ") + "</h3></a>")
-        }
-        getSummaries(data["titles"])
-    });
 
-    if(!done_once){
-        disappear();
+        if(!done_once){
+            disappear();
+        }
     }
 }
 
 function getSummaries(input){
-    $.ajax({
-        url: "https://wikisumapi.herokuapp.com/wiki/" + input.join("+") + "/summaries",
-        dataType: "json"
-    }).done(function(data) {
-        var array = $(".additive");
-        for(var i = 0; i < array.length; i ++) {
-            $(array[i]).append("<p class=\""+input[i]+"\">" + data["summaries"][i] + "</p>");
-        }
-    });
+    if(newSearch) {
+        localStorage.clear();
+        $.ajax({
+            url: host + input.join("+") + "/summaries",
+            dataType: "json"
+        }).done(function (data) {
+            var array = $(".additive");
+            for (var i = 0; i < array.length; i++) {
+                localStorage.setItem(input[i], data['summaries'][i]);
+                var output = data['summaries'][i].substring(0, data['summaries'][i].indexOf(' ', 275)) + "...";
+                $(array[i]).append("<p id=\"" + input[i].replace(/ /g, '_').toLowerCase() + "\">" + output + "</p>");
+            }
+        });
+    }
 }
 
-$("#search").on('keyup', function (e) {
+search.on('keyup', function (e) {
     if (e.keyCode === 13) {
         getData(this.value)
     }
@@ -60,10 +73,48 @@ function disappear() {
 }
 
 function getSearchContent(){
-    getData($("#search").val());
+    getData(search.val());
 }
 
 particlesJS.load('particles-js', 'js/particles.json', function() {
     console.log('callback - particles.js config loaded');
 });
 
+
+
+
+var words = ["Isaac Newton", "String Theory", "Federalism", "Boston Terrier", "Queensland"];
+var currentIndex = 0;
+var increasing = true;
+function cyclePlaceHolders(){
+    var string = search.attr('placeholder');
+    if(increasing){
+        string += words[currentIndex].charAt(string.length);
+        if(string.length === words[currentIndex].length){
+            increasing = false;
+        }
+    }
+    else{
+        string = string.substring(0,string.length - 1);
+        if(string.length === 0){
+            increasing = true;
+            currentIndex = (currentIndex + 1) % words.length
+        }
+    }
+    var timeout = 150 + Math.random() * 70;
+    if(!increasing){
+        timeout /= 2.5;
+    }
+    search.attr('placeholder', string);
+    if(!done_once){
+        setTimeout(cyclePlaceHolders, timeout);
+    }
+}
+
+cyclePlaceHolders();
+
+
+function capitalize(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+
+}
