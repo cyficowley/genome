@@ -1,5 +1,5 @@
 var done_once = false;
-var host = "http://localhost:5000/wiki/";
+var host = "https://wikisumapi.herokuapp.com/wiki/";
 var search = $("#search");
 var latestInput = "";
 
